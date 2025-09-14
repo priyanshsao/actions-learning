@@ -1,0 +1,20 @@
+name: concurrency workflow
+
+on: push
+
+jobs:
+    build:
+      runs-on: ubuntu-latest
+      steps: 
+        - name: printing stage name
+          run: echo deploy stage
+    
+    deploy:
+      timeout-minutes: 1
+      concurrency:
+        group: production-deploy
+        cancel-in-progress: false
+      runs-on: ubuntu-latest
+      steps:
+        - name: sleep for 100 seconds
+          run: sleep 100
